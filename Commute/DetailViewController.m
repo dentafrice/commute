@@ -23,6 +23,25 @@
 
 @implementation DetailViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setupToolbar];
+}
+
+- (void)setupToolbar
+{
+    self.navigationController.toolbarHidden = YES;
+    
+    UIBarButtonItem *flexiableItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshClicked:)];
+    
+    NSArray *items = [NSArray arrayWithObjects:flexiableItem, item1, nil];
+    self.toolbarItems = items;
+    
+    self.navigationController.toolbarHidden=NO;
+}
+
 - (void)setDetailItem:(id)newDetailItem
 {
     if (_detailItem != newDetailItem) {
@@ -34,6 +53,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setupToolbar];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enteredForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     
@@ -42,6 +62,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(predictionsError:) name:kPredictionsErrorNotificationName object:nil];
 
     [self configureView];
+    [self loadPredictions];
+}
+
+- (void)refreshClicked:(id)sender
+{
     [self loadPredictions];
 }
 

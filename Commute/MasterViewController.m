@@ -18,6 +18,12 @@
 
 @implementation MasterViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.toolbarHidden = YES;
+    [super viewWillAppear:animated];
+}
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
