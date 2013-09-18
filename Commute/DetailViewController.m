@@ -34,9 +34,9 @@
     self.navigationController.toolbarHidden = YES;
     
     UIBarButtonItem *flexiableItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshClicked:)];
+    UIBarButtonItem *refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshClicked:)];
     
-    NSArray *items = [NSArray arrayWithObjects:flexiableItem, item1, nil];
+    NSArray *items = [NSArray arrayWithObjects:flexiableItem, refreshItem, nil];
     self.toolbarItems = items;
     
     self.navigationController.toolbarHidden=NO;
