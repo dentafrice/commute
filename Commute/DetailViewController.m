@@ -9,6 +9,7 @@
 #import "DetailViewController.h"
 #import "Stop.h"
 #import "ParseOperation.h"
+#import "Prediction.h"
 
 @interface DetailViewController ()
 - (void)configureView;
@@ -164,10 +165,20 @@
     
     sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"minutes"
                                                  ascending:YES];
+    
     NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     [self.predictions sortUsingDescriptors:sortDescriptors];
     
-    self.detailDescriptionLabel.text = [[self.predictions valueForKey:@"minutes"] componentsJoinedByString:@", "];
+    NSMutableArray *times = [[NSMutableArray alloc] init];
+    
+    for(Prediction *prediction in self.predictions) {
+        NSString *timeString = ([prediction minutes] == 0) ? @"Now" : [NSString stringWithFormat:@"%i", [prediction minutes]];
+        
+        [times addObject:timeString];
+    }
+    
+
+    self.detailDescriptionLabel.text = ([times count] > 0) ? [times componentsJoinedByString:@", "] : @"No Predictions";
 }
 
 - (void)dealloc
