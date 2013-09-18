@@ -34,19 +34,40 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enteredForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addPredictions:) name:kAddPredictionsNotificationName object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(predictionsError:) name:kPredictionsErrorNotificationName object:nil];
+
     [self configureView];
-    [self setupNetworkConnection];
+    [self loadPredictions];
+}
+
+- (void)enteredForeground:(NSNotification *)notif
+{
+    [self loadPredictions];
 }
 
 - (void)configureView
 {
     if (self.detailItem) {
         self.navigationItem.title = [self.detailItem stopTitle];
-        self.detailDescriptionLabel.text = @"Loading..";
     }
 }
 
-- (void)setupNetworkConnection
+- (void)loadPredictions
+{
+    [self.predictions removeAllObjects];
+    self.predictionsData = nil;
+    self.predictionsFeedConnection = nil;
+    self.detailDescriptionLabel.text = @"Loading..";
+    
+    [self makeAPIRequest];
+}
+
+- (void)makeAPIRequest
 {
     self.predictions = [NSMutableArray array];
     
@@ -66,10 +87,6 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     self.parseQueue = [NSOperationQueue new];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addPredictions:) name:kAddPredictionsNotificationName object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(predictionsError:) name:kPredictionsErrorNotificationName object:nil];
 }
 
 #pragma mark - NSUrlConnection Delegate Methods
@@ -186,6 +203,7 @@
     [_predictionsFeedConnection cancel];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddPredictionsNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kPredictionsErrorNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 @end
