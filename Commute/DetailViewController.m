@@ -12,6 +12,10 @@
 #import "Prediction.h"
 
 @interface DetailViewController ()
+{
+    UIBarButtonItem *_refreshItem;
+}
+
 - (void)configureView;
 
 @property (nonatomic) NSMutableArray *predictions;
@@ -34,9 +38,10 @@
     self.navigationController.toolbarHidden = YES;
     
     UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshClicked:)];
     
-    NSArray *items = [NSArray arrayWithObjects:flexible, refreshItem, nil];
+    _refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshClicked:)];
+    
+    NSArray *items = [NSArray arrayWithObjects:flexible, _refreshItem, nil];
     self.toolbarItems = items;
     
     self.navigationController.toolbarHidden=NO;
@@ -95,6 +100,7 @@
 - (void)makeAPIRequest
 {
     self.predictions = [NSMutableArray array];
+    [_refreshItem setEnabled:NO];
     
     // Download the data in a non blocking thread.
     NSString *feedURLString = @"http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=sf-muni&r=L&useShortTitles=true&s=";
@@ -166,6 +172,7 @@
 
     // The NSOperation maintains a strong reference to the predictionsData until it has finished executing so we no longer need a reference to the data in the main thread
     self.predictionsData = nil;
+    [_refreshItem setEnabled:YES];
 }
 
 - (void)handleError:(NSError *)error {
