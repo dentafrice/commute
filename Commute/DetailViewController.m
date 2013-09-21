@@ -33,17 +33,17 @@
 {
     self.navigationController.toolbarHidden = YES;
     
-    UIBarButtonItem *flexiableItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem *refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshClicked:)];
     
-    NSArray *items = [NSArray arrayWithObjects:flexiableItem, refreshItem, nil];
+    NSArray *items = [NSArray arrayWithObjects:flexible, refreshItem, nil];
     self.toolbarItems = items;
     
     self.navigationController.toolbarHidden=NO;
 }
 
 - (void)setDetailItem:(id)newDetailItem
-{    
+{
     if (_detailItem != newDetailItem) {
         _detailItem = newDetailItem;
         [self configureView];
