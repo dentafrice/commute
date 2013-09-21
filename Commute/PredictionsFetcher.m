@@ -103,19 +103,19 @@
     self.predictionsData = nil;
 }
 
-- (void)handleError:(NSError *)error {
-    
-    NSString *errorMessage = [error localizedDescription];
-    NSString *alertTitle = NSLocalizedString(@"Parse Error", @"Parse error.");
-    NSString *okTitle = NSLocalizedString(@"OK ", @"OK.");
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle message:errorMessage delegate:nil cancelButtonTitle:okTitle otherButtonTitles:nil];
-    [alertView show];
+- (void)handleError:(NSError *)error
+{
+    [_delegate errorOccured:[error localizedDescription]];
 }
 
 - (void)dealloc
 {
     [_predictionsFeedConnection cancel];
+}
+
+- (void)errorOccured:(NSString *)errorMessage
+{
+    [_delegate errorOccured:errorMessage];
 }
 
 @end

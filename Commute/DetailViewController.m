@@ -109,7 +109,7 @@
 - (void)startedFetching
 {
     [self.predictions removeAllObjects];
-    self.detailDescriptionLabel.text = @"Loading..";
+    [self.detailDescriptionLabel setText:@"Loading.."];
     [_refreshItem setEnabled:NO];
 }
 
@@ -118,13 +118,23 @@
     [_refreshItem setEnabled:YES];
 }
 
-#pragma mark - NSUrlConnection Delegate Methods
-
-- (void)predictionsError:(NSNotification *)notif
+- (void)errorOccured:(id)errorMessage
 {
-    assert([NSThread isMainThread]);
-    // noop? figure out some error handling.
+    NSString *alertTitle = NSLocalizedString(@"Predictions Error", @"Predictions Error.");
+    NSString *okTitle = NSLocalizedString(@"OK ", @"OK.");
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle message:errorMessage delegate:nil cancelButtonTitle:okTitle otherButtonTitles:nil];
+    [alertView show];
+    
+    [self.detailDescriptionLabel setText:@"Error Occured"];
 }
+
+- (void)errorOccured
+{
+    NSLog(@"error");
+}
+
+#pragma mark - NSUrlConnection Delegate Methods
 
 - (void)didReceiveMemoryWarning
 {

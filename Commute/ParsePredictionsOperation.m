@@ -67,10 +67,10 @@
     [self performSelectorOnMainThread:@selector(sendPredictionsToDelegate:) withObject:self.currentParseBatch waitUntilDone:YES];
 }
 
-- (void)handlePredictionsError:(NSError *)parseError
+- (void)handlePredictionsError:(NSError *)error
 {
     assert([NSThread isMainThread]);
-    // TODO: error handling.
+    [_delegate errorOccured:[error localizedDescription]];
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError

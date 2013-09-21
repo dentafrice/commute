@@ -14,6 +14,7 @@
 - (void)addPredictions:(NSArray *)predictions;
 - (void)startedFetching;
 - (void)stoppedFetching;
+- (void)errorOccured:(NSString *)errorMessage;
 
 @end
 

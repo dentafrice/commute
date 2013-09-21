@@ -11,6 +11,7 @@
 @protocol ParsePredictionsOperationDelegate <NSObject>
 
 - (void)addPredictions:(NSArray *)result;
+- (void)errorOccured:(NSString *)errorMessage;
 
 @end
 
