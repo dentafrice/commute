@@ -38,16 +38,16 @@
 - (void)createMuniStops
 {
     _inboundStops = [[NSMutableArray alloc] initWithObjects:
-                     [[Stop alloc] initWithData:@{@"stopId": @6637, @"stopTitle": @"44th Ave & Taraval St"}],
-                     [[Stop alloc] initWithData:@{@"stopId": @3599, @"stopTitle": @"46th Ave & Taraval St"}]
+                     [[Stop alloc] initWithData:@{@"stopId": @6637, @"stopTitle": @"44th Ave & Taraval St", @"latitude":@37.7418f, @"longitude": @-122.5026099f}],
+                     [[Stop alloc] initWithData:@{@"stopId": @3599, @"stopTitle": @"46th Ave & Taraval St", @"latitude": @37.7416899f, @"longitude": @-122.5045299f}]
                      , nil];
     
     _outboundStops = [[NSMutableArray alloc] initWithObjects:
-                      [[Stop alloc] initWithData:@{@"stopId": @7217, @"stopTitle": @"Embarcadero Station"}],
-                      [[Stop alloc] initWithData:@{@"stopId": @6994, @"stopTitle": @"Montgomery Station"}],
-                      [[Stop alloc] initWithData:@{@"stopId": @6995, @"stopTitle": @"Powell Station"}],
-                      [[Stop alloc] initWithData:@{@"stopId": @6997, @"stopTitle": @"Civic Center Station"}],
-                      [[Stop alloc] initWithData:@{@"stopId": @6614, @"stopTitle": @"17th Ave & Taraval St"}]
+                      [[Stop alloc] initWithData:@{@"stopId": @7217, @"stopTitle": @"Embarcadero Station", @"latitude": @37.7932299f, @"longitude": @-122.39654f}],
+                      [[Stop alloc] initWithData:@{@"stopId": @6994, @"stopTitle": @"Montgomery Station", @"latitude": @37.78879f, @"longitude": @-122.4021299f}],
+                      [[Stop alloc] initWithData:@{@"stopId": @6995, @"stopTitle": @"Powell Station", @"latitude": @37.7843f, @"longitude": @-122.4078199f}],
+                      [[Stop alloc] initWithData:@{@"stopId": @6997, @"stopTitle": @"Civic Center Station", @"latitude": @37.7786799f, @"longitude": @-122.41499f}],
+                      [[Stop alloc] initWithData:@{@"stopId": @6614, @"stopTitle": @"17th Ave & Taraval St", @"latitude": @37.7432f, @"longitude": @-122.4734299f}]
                       , nil];
 }
 

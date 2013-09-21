@@ -8,8 +8,9 @@
 
 #import "DetailViewController.h"
 #import "Stop.h"
-#import "ParseOperation.h"
 #import "Prediction.h"
+
+#define METERS_PER_MILE 1609.344
 
 @interface DetailViewController ()
 {
@@ -17,11 +18,6 @@
 }
 
 - (void)configureView;
-
-@property (nonatomic) NSMutableArray *predictions;
-@property (nonatomic) NSURLConnection *predictionsFeedConnection;
-@property (nonatomic) NSMutableData *predictionsData;
-@property (nonatomic) NSOperationQueue *parseQueue;
 
 @end
 
@@ -58,13 +54,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.predictions = [NSMutableArray array];
     [self setupToolbar];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enteredForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addPredictions:) name:kAddPredictionsNotificationName object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(predictionsError:) name:kPredictionsErrorNotificationName object:nil];
 
     [self configureView];
     [self loadPredictions];
@@ -84,117 +77,53 @@
 {
     if (self.detailItem) {
         self.navigationItem.title = [self.detailItem stopTitle];
+        
+        // MAP
+        CLLocationCoordinate2D zoomLocation;
+        zoomLocation.latitude = [self.detailItem latitude];
+        zoomLocation.longitude= [self.detailItem longitude];
+        
+        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.5*METERS_PER_MILE, 0.5*METERS_PER_MILE);
+        
+        [_mapView setRegion:viewRegion animated:YES];
+        
+        CLLocationCoordinate2D annotationCoord;
+        
+        annotationCoord.latitude = 47.640071;
+        annotationCoord.longitude = -122.129598;
+        
+        MKPointAnnotation *annotationPoint = [[MKPointAnnotation alloc] init];
+        annotationPoint.coordinate = zoomLocation;
+        annotationPoint.title = [[self detailItem] stopTitle];
+        [_mapView addAnnotation:annotationPoint];
     }
 }
 
 - (void)loadPredictions
 {
-    [self.predictions removeAllObjects];
-    self.predictionsData = nil;
-    self.predictionsFeedConnection = nil;
-    self.detailDescriptionLabel.text = @"Loading..";
-    
-    [self makeAPIRequest];
+    PredictionsFetcher *fetcher = [[PredictionsFetcher alloc] initWithStopId:[self.detailItem stopId]];
+    [fetcher setDelegate:self];
+    [fetcher fetchPredictions];
 }
 
-- (void)makeAPIRequest
+- (void)startedFetching
 {
-    self.predictions = [NSMutableArray array];
+    [self.predictions removeAllObjects];
+    self.detailDescriptionLabel.text = @"Loading..";
     [_refreshItem setEnabled:NO];
-    
-    // Download the data in a non blocking thread.
-    NSString *feedURLString = @"http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=sf-muni&r=L&useShortTitles=true&s=";
-    
-    feedURLString = [feedURLString stringByAppendingString: [NSString stringWithFormat:@"%i", [self.detailItem stopId]]];
-    
-    NSURLRequest *predictionsUrlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:feedURLString]];
-    
-    self.predictionsFeedConnection = [[NSURLConnection alloc] initWithRequest:predictionsUrlRequest delegate:self];
-    
-    // Test Connection
-    NSAssert(self.predictionsFeedConnection != nil, @"Failure to create URL connection.");
-    
-    // Set the network spinner
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    self.parseQueue = [NSOperationQueue new];
+}
+
+- (void)stoppedFetching
+{
+    [_refreshItem setEnabled:YES];
 }
 
 #pragma mark - NSUrlConnection Delegate Methods
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    // Check to make sure that the request was successful.
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    
-    if([httpResponse statusCode] / 100 == 2) {
-        self.predictionsData = [NSMutableData data];
-    } else {
-        NSString * errorString = NSLocalizedString(@"HTTP Error", @"There was a connection error.");
-        NSDictionary *userInfo = @{NSLocalizedDescriptionKey : errorString};
-        NSError *error = [NSError errorWithDomain:@"HTTP" code:[httpResponse statusCode] userInfo:userInfo];
-        [self handleError:error];
-    }
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-    [self.predictionsData appendData:data];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
-    if ([error code] == kCFURLErrorNotConnectedToInternet) {
-        // If we can identify the error, we present a suitable message to the user.
-        NSString * errorString = NSLocalizedString(@"No Connection Error", @"Not connected to the internet.");
-        NSDictionary *userInfo = @{NSLocalizedDescriptionKey : errorString};
-        NSError *noConnectionError = [NSError errorWithDomain:NSCocoaErrorDomain code:kCFURLErrorNotConnectedToInternet userInfo:userInfo];
-        [self handleError:noConnectionError];
-    }
-    else {
-        // Otherwise handle the error generically.
-        [self handleError:error];
-    }
-    
-    self.predictionsFeedConnection = nil;
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    self.predictionsFeedConnection = nil;
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
-    // Spawn an NSOperation to parse the data so that the UI is not blocked.
-    ParseOperation *parseOperation = [[ParseOperation alloc] initWithData:self.predictionsData];
-    [self.parseQueue addOperation:parseOperation];
-
-    // The NSOperation maintains a strong reference to the predictionsData until it has finished executing so we no longer need a reference to the data in the main thread
-    self.predictionsData = nil;
-    [_refreshItem setEnabled:YES];
-}
-
-- (void)handleError:(NSError *)error {
-    
-    NSString *errorMessage = [error localizedDescription];
-    NSString *alertTitle = NSLocalizedString(@"Parse Error", @"Parse error.");
-    NSString *okTitle = NSLocalizedString(@"OK ", @"OK.");
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle message:errorMessage delegate:nil cancelButtonTitle:okTitle otherButtonTitles:nil];
-    [alertView show];
-}
-
-- (void)addPredictions:(NSNotification *)notif
-{
-    assert([NSThread isMainThread]);
-    [self addPredictionsToList:[[notif userInfo] valueForKey:kPredictionResultsKey]];
-}
-
 - (void)predictionsError:(NSNotification *)notif
 {
     assert([NSThread isMainThread]);
-    [self handleError:[[notif userInfo] valueForKey:kPredictionsMessageErrorKey]];
+    // noop? figure out some error handling.
 }
 
 - (void)didReceiveMemoryWarning
@@ -202,11 +131,9 @@
     [super didReceiveMemoryWarning];
 }
 
-// The NSOperation "ParseOperation" calls addPredictions: via NSNotification, on the main thread
-// which in turn calls this method, with batches of parsed objects.  The batch size is set via the
-// kSizeOfPredictionsBatch constant
+#pragma mark - PredictionsFetcher delegate methods.
 
-- (void)addPredictionsToList:(NSArray *)predictions
+- (void)addPredictions:(NSArray *)predictions
 {
     [self.predictions addObjectsFromArray:predictions];
     
@@ -226,15 +153,11 @@
         [times addObject:timeString];
     }
     
-
     self.detailDescriptionLabel.text = ([times count] > 0) ? [times componentsJoinedByString:@", "] : @"No Predictions";
 }
 
 - (void)dealloc
 {
-    [_predictionsFeedConnection cancel];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAddPredictionsNotificationName object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPredictionsErrorNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 

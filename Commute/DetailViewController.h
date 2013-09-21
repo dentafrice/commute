@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/Mapkit.h>
+#import "PredictionsFetcher.h"
 
-@interface DetailViewController : UIViewController
+@interface DetailViewController : UIViewController <PredictionsFetcherDelegate>
 
 @property (strong, nonatomic) id detailItem;
-
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@property (nonatomic) NSMutableArray *predictions;
+
 @end

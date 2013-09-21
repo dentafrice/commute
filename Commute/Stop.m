@@ -17,6 +17,8 @@
     if(self) {
         _stopId = [[data valueForKey:@"stopId"] intValue];
         _stopTitle = (NSString *)[data valueForKey:@"stopTitle"];
+        _latitude = [[data valueForKey:@"latitude"] floatValue];
+        _longitude = [[data valueForKey:@"longitude"] floatValue];
     }
     
     return self;

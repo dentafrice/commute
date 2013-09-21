@@ -1,27 +1,15 @@
 //
-//  ParseOperation.m
+//  ParsePredictionsOperation.m
 //  Commute
 //
 //  Created by Caleb Mingle on 9/16/13.
 //  Copyright (c) 2013 Caleb Mingle. All rights reserved.
 //
 
-#import "ParseOperation.h"
+#import "ParsePredictionsOperation.h"
 #import "Prediction.h"
 
-// NSNotification name for sending predictions data back to the app delegate
-NSString *kAddPredictionsNotificationName = @"AddPredictionsNotif";
-
-// NSNotification userInfo key for obtaining the predictions data
-NSString *kPredictionResultsKey = @"PredictionResultsKey";
-
-// NSNotification name for reporting errors
-NSString *kPredictionsErrorNotificationName = @"PredictionErrorNotif";
-
-// NSNotification userInfo key for obtaining the error message
-NSString *kPredictionsMessageErrorKey = @"PredictionsMsgErrorKey";
-
-@interface ParseOperation () <NSXMLParserDelegate>
+@interface ParsePredictionsOperation () <NSXMLParserDelegate>
 
 @property (nonatomic) Prediction *currentPredictionObject;
 @property (nonatomic) NSMutableArray *currentParseBatch;
@@ -29,7 +17,7 @@ NSString *kPredictionsMessageErrorKey = @"PredictionsMsgErrorKey";
 
 @end
 
-@implementation ParseOperation
+@implementation ParsePredictionsOperation
 
 - (id)initWithData:(NSData *)parseData
 {
@@ -43,10 +31,10 @@ NSString *kPredictionsMessageErrorKey = @"PredictionsMsgErrorKey";
     return self;
 }
 
-- (void)addPredictionsToList:(NSArray *)predictions
+- (void)sendPredictionsToDelegate:(NSArray *)predictions
 {
     assert([NSThread isMainThread]);
-    [[NSNotificationCenter defaultCenter] postNotificationName:kAddPredictionsNotificationName object:self userInfo:@{kPredictionResultsKey: predictions}];
+    [_delegate addPredictions:predictions];
 }
 
 // main function to start parsing
@@ -54,10 +42,6 @@ NSString *kPredictionsMessageErrorKey = @"PredictionsMsgErrorKey";
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:self.predictionsData];
     [parser setDelegate:self];
     [parser parse];
-    
-//    if([self.currentParseBatch count] > 0) {
-//        [self performSelectorOnMainThread:@selector(addPredictionsToList:) withObject:self.currentParseBatch waitUntilDone:NO];
-//    }
 }
 
 #pragma mark - NSXMLParser delegate methods
@@ -80,13 +64,13 @@ NSString *kPredictionsMessageErrorKey = @"PredictionsMsgErrorKey";
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
-    [self performSelectorOnMainThread:@selector(addPredictionsToList:) withObject:self.currentParseBatch waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(sendPredictionsToDelegate:) withObject:self.currentParseBatch waitUntilDone:YES];
 }
 
 - (void)handlePredictionsError:(NSError *)parseError
 {
     assert([NSThread isMainThread]);
-    [[NSNotificationCenter defaultCenter] postNotificationName:kPredictionsErrorNotificationName object:self userInfo:@{kPredictionsMessageErrorKey: parseError}];
+    // TODO: error handling.
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError

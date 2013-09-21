@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C41E0BA17EE21D100B0506D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C41E0B917EE21D100B0506D /* MapKit.framework */; };
+		3C41E0BD17EE3A9C00B0506D /* PredictionsFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C41E0BC17EE3A9C00B0506D /* PredictionsFetcher.m */; };
 		82A3FDAD17E81C1E00A436AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A3FDAC17E81C1E00A436AE /* Foundation.framework */; };
 		82A3FDAF17E81C1E00A436AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A3FDAE17E81C1E00A436AE /* CoreGraphics.framework */; };
 		82A3FDB117E81C1E00A436AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A3FDB017E81C1E00A436AE /* UIKit.framework */; };
@@ -23,7 +25,7 @@
 		82A3FDD917E81C1F00A436AE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 82A3FDD717E81C1F00A436AE /* InfoPlist.strings */; };
 		82A3FDDB17E81C1F00A436AE /* CommuteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FDDA17E81C1F00A436AE /* CommuteTests.m */; };
 		82A3FDE617E81D4500A436AE /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FDE517E81D4500A436AE /* Stop.m */; };
-		82A3FDE917E825FF00A436AE /* ParseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FDE817E825FF00A436AE /* ParseOperation.m */; };
+		82A3FDE917E825FF00A436AE /* ParsePredictionsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FDE817E825FF00A436AE /* ParsePredictionsOperation.m */; };
 		82A3FDEC17E8267D00A436AE /* Prediction.m in Sources */ = {isa = PBXBuildFile; fileRef = 82A3FDEB17E8267D00A436AE /* Prediction.m */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C41E0B917EE21D100B0506D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		3C41E0BB17EE3A9C00B0506D /* PredictionsFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PredictionsFetcher.h; sourceTree = "<group>"; };
+		3C41E0BC17EE3A9C00B0506D /* PredictionsFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PredictionsFetcher.m; sourceTree = "<group>"; };
 		82A3FDA917E81C1E00A436AE /* Commute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commute.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82A3FDAC17E81C1E00A436AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		82A3FDAE17E81C1E00A436AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -61,8 +66,8 @@
 		82A3FDDA17E81C1F00A436AE /* CommuteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommuteTests.m; sourceTree = "<group>"; };
 		82A3FDE417E81D4500A436AE /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
 		82A3FDE517E81D4500A436AE /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stop.m; sourceTree = "<group>"; };
-		82A3FDE717E825FF00A436AE /* ParseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseOperation.h; sourceTree = "<group>"; };
-		82A3FDE817E825FF00A436AE /* ParseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseOperation.m; sourceTree = "<group>"; };
+		82A3FDE717E825FF00A436AE /* ParsePredictionsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParsePredictionsOperation.h; sourceTree = "<group>"; };
+		82A3FDE817E825FF00A436AE /* ParsePredictionsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParsePredictionsOperation.m; sourceTree = "<group>"; };
 		82A3FDEA17E8267D00A436AE /* Prediction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prediction.h; sourceTree = "<group>"; };
 		82A3FDEB17E8267D00A436AE /* Prediction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Prediction.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C41E0BA17EE21D100B0506D /* MapKit.framework in Frameworks */,
 				82A3FDAF17E81C1E00A436AE /* CoreGraphics.framework in Frameworks */,
 				82A3FDB117E81C1E00A436AE /* UIKit.framework in Frameworks */,
 				82A3FDAD17E81C1E00A436AE /* Foundation.framework in Frameworks */,
@@ -113,6 +119,7 @@
 		82A3FDAB17E81C1E00A436AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C41E0B917EE21D100B0506D /* MapKit.framework */,
 				82A3FDAC17E81C1E00A436AE /* Foundation.framework */,
 				82A3FDAE17E81C1E00A436AE /* CoreGraphics.framework */,
 				82A3FDB017E81C1E00A436AE /* UIKit.framework */,
@@ -135,10 +142,12 @@
 				82A3FDE417E81D4500A436AE /* Stop.h */,
 				82A3FDE517E81D4500A436AE /* Stop.m */,
 				82A3FDB317E81C1E00A436AE /* Supporting Files */,
-				82A3FDE717E825FF00A436AE /* ParseOperation.h */,
-				82A3FDE817E825FF00A436AE /* ParseOperation.m */,
+				82A3FDE717E825FF00A436AE /* ParsePredictionsOperation.h */,
+				82A3FDE817E825FF00A436AE /* ParsePredictionsOperation.m */,
 				82A3FDEA17E8267D00A436AE /* Prediction.h */,
 				82A3FDEB17E8267D00A436AE /* Prediction.m */,
+				3C41E0BB17EE3A9C00B0506D /* PredictionsFetcher.h */,
+				3C41E0BC17EE3A9C00B0506D /* PredictionsFetcher.m */,
 			);
 			path = Commute;
 			sourceTree = "<group>";
@@ -219,6 +228,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Caleb Mingle";
 				TargetAttributes = {
+					82A3FDA817E81C1E00A436AE = {
+						DevelopmentTeam = 4SZ978T8N6;
+					};
 					82A3FDCC17E81C1E00A436AE = {
 						TestTargetID = 82A3FDA817E81C1E00A436AE;
 					};
@@ -270,10 +282,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				82A3FDE617E81D4500A436AE /* Stop.m in Sources */,
-				82A3FDE917E825FF00A436AE /* ParseOperation.m in Sources */,
+				82A3FDE917E825FF00A436AE /* ParsePredictionsOperation.m in Sources */,
 				82A3FDBD17E81C1E00A436AE /* AppDelegate.m in Sources */,
 				82A3FDC317E81C1E00A436AE /* MasterViewController.m in Sources */,
 				82A3FDEC17E8267D00A436AE /* Prediction.m in Sources */,
+				3C41E0BD17EE3A9C00B0506D /* PredictionsFetcher.m in Sources */,
 				82A3FDB917E81C1E00A436AE /* main.m in Sources */,
 				82A3FDC617E81C1E00A436AE /* DetailViewController.m in Sources */,
 			);
@@ -402,10 +415,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Commute/Commute-Prefix.pch";
 				INFOPLIST_FILE = "Commute/Commute-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -415,10 +431,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Commute/Commute-Prefix.pch";
 				INFOPLIST_FILE = "Commute/Commute-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -484,6 +503,7 @@
 				82A3FDE017E81C1F00A436AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		82A3FDE117E81C1F00A436AE /* Build configuration list for PBXNativeTarget "CommuteTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +512,7 @@
 				82A3FDE317E81C1F00A436AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
