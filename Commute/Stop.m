@@ -10,4 +10,16 @@
 
 @implementation Stop
 
+- (id)initWithData:(NSDictionary *)data
+{
+    self = [super init];
+
+    if(self) {
+        _stopId = [[data valueForKey:@"stopId"] intValue];
+        _stopTitle = (NSString *)[data valueForKey:@"stopTitle"];
+    }
+    
+    return self;
+}
+
 @end

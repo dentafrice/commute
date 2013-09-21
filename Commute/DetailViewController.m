@@ -43,7 +43,7 @@
 }
 
 - (void)setDetailItem:(id)newDetailItem
-{
+{    
     if (_detailItem != newDetailItem) {
         _detailItem = newDetailItem;
         [self configureView];
@@ -98,6 +98,8 @@
     
     // Download the data in a non blocking thread.
     NSString *feedURLString = @"http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=sf-muni&r=L&useShortTitles=true&s=";
+    
+    NSLog(@"%i", [self.detailItem stopId]);
     
     feedURLString = [feedURLString stringByAppendingString: [NSString stringWithFormat:@"%i", [self.detailItem stopId]]];
     

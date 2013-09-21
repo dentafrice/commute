@@ -10,6 +10,8 @@
 
 @interface Stop : NSObject
 
+- (id)initWithData:(NSDictionary *)data;
+
 @property (nonatomic) int stopId;
 @property (nonatomic) NSString *stopTitle;
 

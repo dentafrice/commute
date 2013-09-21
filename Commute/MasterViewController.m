@@ -35,50 +35,20 @@
     [self createMuniStops];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 - (void)createMuniStops
 {
-    _inboundStops = [[NSMutableArray alloc] init];
-    _outboundStops = [[NSMutableArray alloc] init];
+    _inboundStops = [[NSMutableArray alloc] initWithObjects:
+                     [[Stop alloc] initWithData:@{@"stopId": @6637, @"stopTitle": @"44th Ave & Taraval St"}],
+                     [[Stop alloc] initWithData:@{@"stopId": @3599, @"stopTitle": @"46th Ave & Taraval St"}]
+                     , nil];
     
-    Stop *stop = [[Stop alloc] init];
-    stop.stopId = 6637;
-    stop.stopTitle = @"44th Ave & Taraval St";
-    [_inboundStops addObject:stop];
-    
-    stop = [[Stop alloc] init];
-    stop.stopId = 3599;
-    stop.stopTitle = @"46th Ave & Taraval St";
-    [_inboundStops addObject:stop];
-    
-    stop = [[Stop alloc] init];
-    stop.stopId = 7217;
-    stop.stopTitle = @"Embarcadero Station";
-    [_outboundStops addObject:stop];
-    
-    stop = [[Stop alloc] init];
-    stop.stopId = 6994;
-    stop.stopTitle = @"Montgomery Station";
-    [_outboundStops addObject:stop];
-    
-    stop = [[Stop alloc] init];
-    stop.stopId = 6995;
-    stop.stopTitle = @"Powell Station";
-    [_outboundStops addObject:stop];
-    
-    stop = [[Stop alloc] init];
-    stop.stopId = 6997;
-    stop.stopTitle = @"Civic Center Station";
-    [_outboundStops addObject:stop];
-    
-    stop = [[Stop alloc] init];
-    stop.stopId = 6614;
-    stop.stopTitle = @"17th Ave & Taraval St";
-    [_outboundStops addObject:stop];
+    _outboundStops = [[NSMutableArray alloc] initWithObjects:
+                      [[Stop alloc] initWithData:@{@"stopId": @7217, @"stopTitle": @"Embarcadero Station"}],
+                      [[Stop alloc] initWithData:@{@"stopId": @6994, @"stopTitle": @"Montgomery Station"}],
+                      [[Stop alloc] initWithData:@{@"stopId": @6995, @"stopTitle": @"Powell Station"}],
+                      [[Stop alloc] initWithData:@{@"stopId": @6997, @"stopTitle": @"Civic Center Station"}],
+                      [[Stop alloc] initWithData:@{@"stopId": @6614, @"stopTitle": @"17th Ave & Taraval St"}]
+                      , nil];
 }
 
 #pragma mark - Table View
@@ -116,6 +86,11 @@
     }
     
     return 0;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
