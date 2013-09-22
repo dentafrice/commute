@@ -166,6 +166,7 @@
 		82A3FDA017E81C1E00A436AE = {
 			isa = PBXGroup;
 			children = (
+				82A3FDBE17E81C1E00A436AE /* Main.storyboard */,
 				82A3FDB217E81C1E00A436AE /* Commute */,
 				82A3FDD417E81C1F00A436AE /* CommuteTests */,
 				82A3FDAB17E81C1E00A436AE /* Frameworks */,
@@ -197,19 +198,15 @@
 		82A3FDB217E81C1E00A436AE /* Commute */ = {
 			isa = PBXGroup;
 			children = (
-				3C41E0CD17EEB76600B0506D /* Annotations */,
 				82A3FDBB17E81C1E00A436AE /* AppDelegate.h */,
 				82A3FDBC17E81C1E00A436AE /* AppDelegate.m */,
-				82A3FDBE17E81C1E00A436AE /* Main.storyboard */,
-				82A3FDC117E81C1E00A436AE /* MasterViewController.h */,
-				82A3FDC217E81C1E00A436AE /* MasterViewController.m */,
-				82A3FDC417E81C1E00A436AE /* DetailViewController.h */,
-				82A3FDC517E81C1E00A436AE /* DetailViewController.m */,
-				82A3FDC717E81C1E00A436AE /* Images.xcassets */,
+				3C41E0CD17EEB76600B0506D /* Annotations */,
+				82A3FDEF17EEC24500A436AE /* Controllers */,
 				3C41E0BF17EE642F00B0506D /* Models */,
-				82A3FDB317E81C1E00A436AE /* Supporting Files */,
 				3C41E0C317EE661300B0506D /* Vehicles */,
 				3C41E0BE17EE610600B0506D /* Predictions */,
+				82A3FDC717E81C1E00A436AE /* Images.xcassets */,
+				82A3FDB317E81C1E00A436AE /* Supporting Files */,
 			);
 			path = Commute;
 			sourceTree = "<group>";
@@ -241,6 +238,17 @@
 				82A3FDD717E81C1F00A436AE /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		82A3FDEF17EEC24500A436AE /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				82A3FDC117E81C1E00A436AE /* MasterViewController.h */,
+				82A3FDC217E81C1E00A436AE /* MasterViewController.m */,
+				82A3FDC417E81C1E00A436AE /* DetailViewController.h */,
+				82A3FDC517E81C1E00A436AE /* DetailViewController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,6 +401,7 @@
 				82A3FDBF17E81C1E00A436AE /* Base */,
 			);
 			name = Main.storyboard;
+			path = Commute;
 			sourceTree = "<group>";
 		};
 		82A3FDD717E81C1F00A436AE /* InfoPlist.strings */ = {

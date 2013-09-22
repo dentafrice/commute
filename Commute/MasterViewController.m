@@ -38,8 +38,8 @@
 - (void)createMuniStops
 {
     _inboundStops = [[NSMutableArray alloc] initWithObjects:
-                     [[Stop alloc] initWithData:@{@"stopId": @6637, @"stopTitle": @"44th Ave & Taraval St", @"latitude":@37.7418f, @"longitude": @-122.5026099f}],
-                     [[Stop alloc] initWithData:@{@"stopId": @3599, @"stopTitle": @"46th Ave & Taraval St", @"latitude": @37.7416899f, @"longitude": @-122.5045299f}]
+                     [[Stop alloc] initWithData:@{@"stopId": @6637, @"stopTitle": @"44th Ave & Taraval St", @"latitude":@37.7418f, @"longitude": @-122.5026099f, @"isInbound": @YES}],
+                     [[Stop alloc] initWithData:@{@"stopId": @3599, @"stopTitle": @"46th Ave & Taraval St", @"latitude": @37.7416899f, @"longitude": @-122.5045299f, @"isInbound": @YES}]
                      , nil];
     
     _outboundStops = [[NSMutableArray alloc] initWithObjects:

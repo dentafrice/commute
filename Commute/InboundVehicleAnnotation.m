@@ -9,5 +9,11 @@
 #import "InboundVehicleAnnotation.h"
 
 @implementation InboundVehicleAnnotation
+@synthesize title = _title;
+
+- (void)setTitle:(NSString *)title
+{
+    _title = [title stringByAppendingString:@" - Inbound"];
+}
 
 @end

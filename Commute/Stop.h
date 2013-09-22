@@ -16,5 +16,6 @@
 @property (nonatomic) NSString *stopTitle;
 @property (nonatomic) float latitude;
 @property (nonatomic) float longitude;
+@property (nonatomic) BOOL isInbound;
 
 @end

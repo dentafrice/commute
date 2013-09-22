@@ -92,17 +92,27 @@
         
         [_mapView setDelegate:self];
         [_mapView setRegion:viewRegion animated:YES];
-        
-        StationAnnotation *annotationPoint = [[StationAnnotation alloc] init];
-        annotationPoint.coordinate = zoomLocation;
-        annotationPoint.title = [[self detailItem] stopTitle];
-        annotationPoint.subtitle = @"Stop";
-        [_mapView addAnnotation:annotationPoint];
+        [self drawStationAnnotation];
     }
+}
+
+- (void)drawStationAnnotation
+{
+    CLLocationCoordinate2D zoomLocation;
+    zoomLocation.latitude = [self.detailItem latitude];
+    zoomLocation.longitude= [self.detailItem longitude];
+    
+    StationAnnotation *annotationPoint = [[StationAnnotation alloc] init];
+    annotationPoint.coordinate = zoomLocation;
+    annotationPoint.title = [[self detailItem] stopTitle];
+    annotationPoint.subtitle = @"Stop";
+    [_mapView addAnnotation:annotationPoint];
 }
 
 - (void)loadPredictions
 {
+    [_mapView removeAnnotations:_mapView.annotations];
+    [self drawStationAnnotation];
     PredictionsFetcher *fetcher = [[PredictionsFetcher alloc] initWithStopId:[self.detailItem stopId]];
     [fetcher setDelegate:self];
     [fetcher fetchPredictions];
@@ -169,7 +179,7 @@
     
         annotationPoint.coordinate = annotationCoord;
         annotationPoint.title = [[NSNumber numberWithInt:[vehicle vId]] stringValue];
-        annotationPoint.subtitle = @"Vehicle";
+        annotationPoint.subtitle = [NSString stringWithFormat:@"%i minutes", [prediction minutes]];
         [_mapView addAnnotation:annotationPoint];
     }
 }
@@ -195,13 +205,6 @@
     pinView.canShowCallout = YES;
     
     return pinView;
-}
-
-#pragma mark - NSUrlConnection Delegate Methods
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 #pragma mark - PredictionsFetcher delegate methods.
@@ -231,6 +234,11 @@
     if([times count] > 0) {
         [self loadVehicles];
     }
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
 }
 
 - (void)dealloc

@@ -15,6 +15,7 @@
     self = [super init];
 
     if(self) {
+        _isInbound = [[data valueForKey:@"isInbound"] boolValue];
         _stopId = [[data valueForKey:@"stopId"] intValue];
         _stopTitle = (NSString *)[data valueForKey:@"stopTitle"];
         _latitude = [[data valueForKey:@"latitude"] floatValue];

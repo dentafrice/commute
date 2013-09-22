@@ -9,5 +9,11 @@
 #import "OutboundVehicleAnnotation.h"
 
 @implementation OutboundVehicleAnnotation
+@synthesize title = _title;
+
+- (void)setTitle:(NSString *)title
+{
+    _title = [title stringByAppendingString:@" - Outbound"];
+}
 
 @end
