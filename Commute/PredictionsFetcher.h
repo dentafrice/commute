@@ -12,9 +12,9 @@
 @protocol PredictionsFetcherDelegate <NSObject>
 
 - (void)addPredictions:(NSArray *)predictions;
-- (void)startedFetching;
-- (void)stoppedFetching;
-- (void)errorOccured:(NSString *)errorMessage;
+- (void)startedFetchingPredictions;
+- (void)stoppedFetchingPredictions;
+- (void)errorOccuredFetchingPredictions:(NSString *)errorMessage;
 
 @end
 
@@ -22,7 +22,6 @@
 
 - (id)initWithStopId:(int)stopId;
 
-@property (atomic) NSMutableArray *predictions;
 @property (nonatomic) NSURLConnection *predictionsFeedConnection;
 @property (nonatomic) NSMutableData *predictionsData;
 @property (nonatomic) NSOperationQueue *parseQueue;

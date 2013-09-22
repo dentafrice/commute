@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		3C41E0BA17EE21D100B0506D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C41E0B917EE21D100B0506D /* MapKit.framework */; };
 		3C41E0BD17EE3A9C00B0506D /* PredictionsFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C41E0BC17EE3A9C00B0506D /* PredictionsFetcher.m */; };
+		3C41E0C217EE649C00B0506D /* Vehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C41E0C117EE649C00B0506D /* Vehicle.m */; };
+		3C41E0C617EE663200B0506D /* VehicleLocationFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C41E0C517EE663200B0506D /* VehicleLocationFetcher.m */; };
+		3C41E0C917EE709100B0506D /* ParseVehiclesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C41E0C817EE709100B0506D /* ParseVehiclesOperation.m */; };
+		3C41E0CC17EEB5BA00B0506D /* StationAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C41E0CB17EEB5BA00B0506D /* StationAnnotation.m */; };
+		3C41E0D017EEB78500B0506D /* InboundVehicleAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C41E0CF17EEB78500B0506D /* InboundVehicleAnnotation.m */; };
+		3C41E0D317EEB79400B0506D /* OutboundVehicleAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C41E0D217EEB79400B0506D /* OutboundVehicleAnnotation.m */; };
 		82A3FDAD17E81C1E00A436AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A3FDAC17E81C1E00A436AE /* Foundation.framework */; };
 		82A3FDAF17E81C1E00A436AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A3FDAE17E81C1E00A436AE /* CoreGraphics.framework */; };
 		82A3FDB117E81C1E00A436AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A3FDB017E81C1E00A436AE /* UIKit.framework */; };
@@ -43,6 +49,18 @@
 		3C41E0B917EE21D100B0506D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3C41E0BB17EE3A9C00B0506D /* PredictionsFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PredictionsFetcher.h; sourceTree = "<group>"; };
 		3C41E0BC17EE3A9C00B0506D /* PredictionsFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PredictionsFetcher.m; sourceTree = "<group>"; };
+		3C41E0C017EE649C00B0506D /* Vehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vehicle.h; sourceTree = "<group>"; };
+		3C41E0C117EE649C00B0506D /* Vehicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vehicle.m; sourceTree = "<group>"; };
+		3C41E0C417EE663200B0506D /* VehicleLocationFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VehicleLocationFetcher.h; sourceTree = "<group>"; };
+		3C41E0C517EE663200B0506D /* VehicleLocationFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VehicleLocationFetcher.m; sourceTree = "<group>"; };
+		3C41E0C717EE709100B0506D /* ParseVehiclesOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseVehiclesOperation.h; sourceTree = "<group>"; };
+		3C41E0C817EE709100B0506D /* ParseVehiclesOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseVehiclesOperation.m; sourceTree = "<group>"; };
+		3C41E0CA17EEB5BA00B0506D /* StationAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StationAnnotation.h; sourceTree = "<group>"; };
+		3C41E0CB17EEB5BA00B0506D /* StationAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationAnnotation.m; sourceTree = "<group>"; };
+		3C41E0CE17EEB78500B0506D /* InboundVehicleAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboundVehicleAnnotation.h; sourceTree = "<group>"; };
+		3C41E0CF17EEB78500B0506D /* InboundVehicleAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboundVehicleAnnotation.m; sourceTree = "<group>"; };
+		3C41E0D117EEB79400B0506D /* OutboundVehicleAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutboundVehicleAnnotation.h; sourceTree = "<group>"; };
+		3C41E0D217EEB79400B0506D /* OutboundVehicleAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutboundVehicleAnnotation.m; sourceTree = "<group>"; };
 		82A3FDA917E81C1E00A436AE /* Commute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commute.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82A3FDAC17E81C1E00A436AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		82A3FDAE17E81C1E00A436AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -97,6 +115,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C41E0BE17EE610600B0506D /* Predictions */ = {
+			isa = PBXGroup;
+			children = (
+				82A3FDE717E825FF00A436AE /* ParsePredictionsOperation.h */,
+				82A3FDE817E825FF00A436AE /* ParsePredictionsOperation.m */,
+				3C41E0BB17EE3A9C00B0506D /* PredictionsFetcher.h */,
+				3C41E0BC17EE3A9C00B0506D /* PredictionsFetcher.m */,
+			);
+			name = Predictions;
+			sourceTree = "<group>";
+		};
+		3C41E0BF17EE642F00B0506D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				82A3FDE417E81D4500A436AE /* Stop.h */,
+				82A3FDE517E81D4500A436AE /* Stop.m */,
+				82A3FDEA17E8267D00A436AE /* Prediction.h */,
+				82A3FDEB17E8267D00A436AE /* Prediction.m */,
+				3C41E0C017EE649C00B0506D /* Vehicle.h */,
+				3C41E0C117EE649C00B0506D /* Vehicle.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		3C41E0C317EE661300B0506D /* Vehicles */ = {
+			isa = PBXGroup;
+			children = (
+				3C41E0C717EE709100B0506D /* ParseVehiclesOperation.h */,
+				3C41E0C817EE709100B0506D /* ParseVehiclesOperation.m */,
+				3C41E0C417EE663200B0506D /* VehicleLocationFetcher.h */,
+				3C41E0C517EE663200B0506D /* VehicleLocationFetcher.m */,
+			);
+			name = Vehicles;
+			sourceTree = "<group>";
+		};
+		3C41E0CD17EEB76600B0506D /* Annotations */ = {
+			isa = PBXGroup;
+			children = (
+				3C41E0CA17EEB5BA00B0506D /* StationAnnotation.h */,
+				3C41E0CB17EEB5BA00B0506D /* StationAnnotation.m */,
+				3C41E0CE17EEB78500B0506D /* InboundVehicleAnnotation.h */,
+				3C41E0CF17EEB78500B0506D /* InboundVehicleAnnotation.m */,
+				3C41E0D117EEB79400B0506D /* OutboundVehicleAnnotation.h */,
+				3C41E0D217EEB79400B0506D /* OutboundVehicleAnnotation.m */,
+			);
+			name = Annotations;
+			sourceTree = "<group>";
+		};
 		82A3FDA017E81C1E00A436AE = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +197,7 @@
 		82A3FDB217E81C1E00A436AE /* Commute */ = {
 			isa = PBXGroup;
 			children = (
+				3C41E0CD17EEB76600B0506D /* Annotations */,
 				82A3FDBB17E81C1E00A436AE /* AppDelegate.h */,
 				82A3FDBC17E81C1E00A436AE /* AppDelegate.m */,
 				82A3FDBE17E81C1E00A436AE /* Main.storyboard */,
@@ -139,15 +206,10 @@
 				82A3FDC417E81C1E00A436AE /* DetailViewController.h */,
 				82A3FDC517E81C1E00A436AE /* DetailViewController.m */,
 				82A3FDC717E81C1E00A436AE /* Images.xcassets */,
-				82A3FDE417E81D4500A436AE /* Stop.h */,
-				82A3FDE517E81D4500A436AE /* Stop.m */,
+				3C41E0BF17EE642F00B0506D /* Models */,
 				82A3FDB317E81C1E00A436AE /* Supporting Files */,
-				82A3FDE717E825FF00A436AE /* ParsePredictionsOperation.h */,
-				82A3FDE817E825FF00A436AE /* ParsePredictionsOperation.m */,
-				82A3FDEA17E8267D00A436AE /* Prediction.h */,
-				82A3FDEB17E8267D00A436AE /* Prediction.m */,
-				3C41E0BB17EE3A9C00B0506D /* PredictionsFetcher.h */,
-				3C41E0BC17EE3A9C00B0506D /* PredictionsFetcher.m */,
+				3C41E0C317EE661300B0506D /* Vehicles */,
+				3C41E0BE17EE610600B0506D /* Predictions */,
 			);
 			path = Commute;
 			sourceTree = "<group>";
@@ -282,9 +344,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				82A3FDE617E81D4500A436AE /* Stop.m in Sources */,
+				3C41E0C617EE663200B0506D /* VehicleLocationFetcher.m in Sources */,
 				82A3FDE917E825FF00A436AE /* ParsePredictionsOperation.m in Sources */,
+				3C41E0D017EEB78500B0506D /* InboundVehicleAnnotation.m in Sources */,
+				3C41E0C217EE649C00B0506D /* Vehicle.m in Sources */,
+				3C41E0D317EEB79400B0506D /* OutboundVehicleAnnotation.m in Sources */,
 				82A3FDBD17E81C1E00A436AE /* AppDelegate.m in Sources */,
 				82A3FDC317E81C1E00A436AE /* MasterViewController.m in Sources */,
+				3C41E0C917EE709100B0506D /* ParseVehiclesOperation.m in Sources */,
+				3C41E0CC17EEB5BA00B0506D /* StationAnnotation.m in Sources */,
 				82A3FDEC17E8267D00A436AE /* Prediction.m in Sources */,
 				3C41E0BD17EE3A9C00B0506D /* PredictionsFetcher.m in Sources */,
 				82A3FDB917E81C1E00A436AE /* main.m in Sources */,

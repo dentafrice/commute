@@ -30,8 +30,7 @@
 
 - (void)fetchPredictions
 {
-    [_delegate startedFetching];
-    self.predictions = [NSMutableArray array];
+    [_delegate startedFetchingPredictions];
     
     // Download the data in a non blocking thread.
     NSString *feedURLString = @"http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=sf-muni&r=L&useShortTitles=true&s=";
@@ -85,7 +84,7 @@
         [self handleError:error];
     }
     
-    [_delegate stoppedFetching];
+    [_delegate stoppedFetchingPredictions];
     
     self.predictionsFeedConnection = nil;
 }
@@ -99,13 +98,13 @@
     [parsePredictionsOperation setDelegate:self];
     [self.parseQueue addOperation:parsePredictionsOperation];
 
-    [_delegate stoppedFetching];
+    [_delegate stoppedFetchingPredictions];
     self.predictionsData = nil;
 }
 
 - (void)handleError:(NSError *)error
 {
-    [_delegate errorOccured:[error localizedDescription]];
+    [_delegate errorOccuredFetchingPredictions:[error localizedDescription]];
 }
 
 - (void)dealloc
@@ -115,7 +114,7 @@
 
 - (void)errorOccured:(NSString *)errorMessage
 {
-    [_delegate errorOccured:errorMessage];
+    [_delegate errorOccuredFetchingPredictions:errorMessage];
 }
 
 @end

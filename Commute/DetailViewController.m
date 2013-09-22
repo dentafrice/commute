@@ -9,6 +9,10 @@
 #import "DetailViewController.h"
 #import "Stop.h"
 #import "Prediction.h"
+#import "Vehicle.h"
+#import "StationAnnotation.h"
+#import "InboundVehicleAnnotation.h"
+#import "OutboundVehicleAnnotation.h"
 
 #define METERS_PER_MILE 1609.344
 
@@ -55,6 +59,7 @@
 {
     [super viewDidLoad];
     self.predictions = [NSMutableArray array];
+    self.vehicles = [NSMutableArray array];
     [self setupToolbar];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enteredForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -85,16 +90,13 @@
         
         MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.5*METERS_PER_MILE, 0.5*METERS_PER_MILE);
         
+        [_mapView setDelegate:self];
         [_mapView setRegion:viewRegion animated:YES];
         
-        CLLocationCoordinate2D annotationCoord;
-        
-        annotationCoord.latitude = 47.640071;
-        annotationCoord.longitude = -122.129598;
-        
-        MKPointAnnotation *annotationPoint = [[MKPointAnnotation alloc] init];
+        StationAnnotation *annotationPoint = [[StationAnnotation alloc] init];
         annotationPoint.coordinate = zoomLocation;
         annotationPoint.title = [[self detailItem] stopTitle];
+        annotationPoint.subtitle = @"Stop";
         [_mapView addAnnotation:annotationPoint];
     }
 }
@@ -106,19 +108,26 @@
     [fetcher fetchPredictions];
 }
 
-- (void)startedFetching
+- (void)loadVehicles
+{
+    VehicleLocationFetcher *fetcher = [[VehicleLocationFetcher alloc] initWithRoute:@"L"];
+    [fetcher setDelegate:self];
+    [fetcher fetchVehicleLocations];
+}
+
+- (void)startedFetchingPredictions
 {
     [self.predictions removeAllObjects];
     [self.detailDescriptionLabel setText:@"Loading.."];
     [_refreshItem setEnabled:NO];
 }
 
-- (void)stoppedFetching
+- (void)stoppedFetchingPredictions
 {
     [_refreshItem setEnabled:YES];
 }
 
-- (void)errorOccured:(id)errorMessage
+- (void)errorOccuredFetchingPredictions:(id)errorMessage
 {
     NSString *alertTitle = NSLocalizedString(@"Predictions Error", @"Predictions Error.");
     NSString *okTitle = NSLocalizedString(@"OK ", @"OK.");
@@ -132,6 +141,60 @@
 - (void)errorOccured
 {
     NSLog(@"error");
+}
+
+- (void)vehiclesFetched:(NSArray *)vehicles
+{
+    self.vehicles = [vehicles copy];
+    NSMutableDictionary *lookupTable = [[NSMutableDictionary alloc] init];
+    
+    for(Vehicle *vehicle in self.vehicles) {
+        [lookupTable setValue:vehicle forKey:[[NSNumber numberWithInt:[vehicle vId]] stringValue]];
+    }
+    
+    for(Prediction *prediction in self.predictions) {
+        Vehicle *vehicle = [lookupTable valueForKey:[[NSNumber numberWithInt:[prediction vehicle]] stringValue]];
+        
+        CLLocationCoordinate2D annotationCoord;
+        annotationCoord.latitude = [vehicle latitude];
+        annotationCoord.longitude = [vehicle longitude];
+        
+        MKPointAnnotation *annotationPoint;
+        
+        if([vehicle isInbound]) {
+            annotationPoint = [[InboundVehicleAnnotation alloc] init];
+        } else {
+            annotationPoint = [[OutboundVehicleAnnotation alloc] init];
+        }
+    
+        annotationPoint.coordinate = annotationCoord;
+        annotationPoint.title = [[NSNumber numberWithInt:[vehicle vId]] stringValue];
+        annotationPoint.subtitle = @"Vehicle";
+        [_mapView addAnnotation:annotationPoint];
+    }
+}
+
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotationPoint
+{
+    static NSString *annotationIdentifier = @"annotationIdentifier";
+    
+    if([annotationPoint isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    
+    MKPinAnnotationView *pinView = [[MKPinAnnotationView alloc]initWithAnnotation:annotationPoint reuseIdentifier:annotationIdentifier];
+    
+    if([annotationPoint isKindOfClass:[InboundVehicleAnnotation class]]) {
+        pinView.pinColor = MKPinAnnotationColorGreen;
+    } else if([annotationPoint isKindOfClass:[OutboundVehicleAnnotation class]]) {
+        pinView.pinColor = MKPinAnnotationColorRed;
+    } else {
+        pinView.pinColor = MKPinAnnotationColorPurple;
+    }
+    
+    pinView.canShowCallout = YES;
+    
+    return pinView;
 }
 
 #pragma mark - NSUrlConnection Delegate Methods
@@ -164,6 +227,10 @@
     }
     
     self.detailDescriptionLabel.text = ([times count] > 0) ? [times componentsJoinedByString:@", "] : @"No Predictions";
+    
+    if([times count] > 0) {
+        [self loadVehicles];
+    }
 }
 
 - (void)dealloc

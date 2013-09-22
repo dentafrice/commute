@@ -13,7 +13,6 @@
 
 @property (nonatomic) Prediction *currentPredictionObject;
 @property (nonatomic) NSMutableArray *currentParseBatch;
-@property (nonatomic) NSMutableString *currentParsedCharacterData;
 
 @end
 
@@ -52,6 +51,7 @@
         Prediction *prediction = [[Prediction alloc] init];
         self.currentPredictionObject = prediction;
         self.currentPredictionObject.minutes = [(NSString *)[attributeDict valueForKey:@"minutes"] intValue];
+        self.currentPredictionObject.vehicle = [(NSString *) [attributeDict valueForKey:@"vehicle"] intValue];
     }
 }
 
